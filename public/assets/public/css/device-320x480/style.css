@@ -1,0 +1,17 @@
+@media only screen and (max-width: 320px) and (max-width: 360px) {
+  .mobile-title-product {
+    width: 60%; } }
+@media only screen and (max-width: 480px) and (min-width: 361px) {
+  .mobile-title-product {
+    width: 75%; }
+
+  #contents .sbHolder {
+    width: 210px !important; }
+
+  .da-thumbs li {
+    height: auto !important; }
+
+  .da-thumbs li a img {
+    height: 250px !important; } }
+
+/*# sourceMappingURL=style.css.map */

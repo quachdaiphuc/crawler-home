@@ -1,0 +1,90 @@
+@media only screen and (max-width: 768px) and (min-width: 645px){
+    #back-top {
+        display: none;
+    }
+    .mobile-title-product {
+        width: 70%;
+    }
+    #contents .sbHolder {
+        width: 210px !important;
+    }
+    #contents .content-left .child-item a.tip_trigger {
+        width: 48%;
+        float: left;
+    }
+    ul.dropdown li {
+        overflow: hidden;
+    }
+    ul.dropdown li ul li {
+        width: 25% !important;
+    }
+    /*style for detail category page*/
+    .da-thumbs li {
+        height: auto !important;
+        width: 32% !important;
+        float: left !important;
+        margin-right: 14px !important;
+    }
+    .da-thumbs li:nth-child( 3n + 3 ) {
+        float: right !important;
+        margin-right: 0px !important;
+    }
+    #back-top {
+        display: none !important;
+    }
+     /*style for detail product*/
+    .relate-product .da-thumbs {
+        margin: 0px !important;
+    }
+    .relate-product .da-thumbs li {
+        width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 802px){
+    .header-search {
+        width: 36% !important;
+    }
+    #contents {
+        width: 93.65% !important;
+    }
+    .title {
+        width: 55.667% !important;
+    }
+    .col-md-3 {
+        width: 32% !important;
+    }
+    .content-left {
+        width: 75% !important;
+    }
+    .content-right {
+        width: 24% !important;
+    }
+    h4.panel-title {
+        font-size: 14px;
+    }
+    .register-login {
+        width: 27% !important;
+        float: right;
+        margin-right: 22px;
+    }
+
+    /*style for detail category page*/
+    .da-thumbs li {
+        height: auto !important;
+        width: 33% !important;
+        float: left !important;
+        margin-right: 3px !important;
+    }
+    .da-thumbs li:nth-child( 3n + 3 ) {
+        float: right !important;
+        margin-right: 0px !important;
+    }
+    /*style for detail product*/
+    .relate-product .da-thumbs {
+        margin: 0px !important;
+    }
+    .relate-product .da-thumbs li {
+        width: 100% !important;
+    }
+}

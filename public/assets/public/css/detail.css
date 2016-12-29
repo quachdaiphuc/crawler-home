@@ -1,0 +1,89 @@
+#box-title .breadcrumb {
+  background-color: #fff;
+  padding: 0px; }
+
+.content-left .detail-product {
+  width: 68%;
+  float: left;
+  background: #ffffff;
+  min-height: 500px;
+  box-shadow: 0px 0px 2px #c3c3c3; }
+  .content-left .detail-product .main-image {
+    width: 100%;
+    height: auto;
+    padding: 5px 5px;
+    border-bottom: 1px inset #cbcbcb; }
+    .content-left .detail-product .main-image img {
+      display: block;
+      width: 100%;
+      height: 300px; }
+    .content-left .detail-product .main-image .buy-share {
+      width: 100%;
+      height: 70px;
+      line-height: 70px;
+      text-align: center; }
+      .content-left .detail-product .main-image .buy-share span {
+        float: left;
+        margin-left: 10px;
+        font-size: 4.5vw; }
+        .content-left .detail-product .main-image .buy-share span i {
+          font-size: 2vw; }
+  .content-left .detail-product .description-detail {
+    padding: 5px;
+    margin: 15px 0px;
+    width: 100%;
+    height: auto;
+    overflow: hidden; }
+  .content-left .detail-product .share-product {
+    width: 100%;
+    height: 100px;
+    padding: 0px 5px; }
+.content-left .relate-product {
+  width: 30%;
+  float: right;
+  min-height: 500px;
+  background: #ffffff;
+  box-shadow: 0px 0px 2px #c3c3c3; }
+  .content-left .relate-product .da-thumbs :nth-child(3n+3) {
+    float: left !important; }
+  .content-left .relate-product span.relate-pro-title {
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 40px;
+    font-size: 18px;
+    text-align: center;
+    background: url("images/arrow-down.jpg") no-repeat bottom; }
+  .content-left .relate-product ul {
+    padding: 0px;
+    width: 100%;
+    margin: 10px 2px; }
+    .content-left .relate-product ul li {
+      box-shadow: none; }
+
+@media only screen and (max-width: 767px) {
+  #header {
+    background: #333;
+    height: 34px;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    z-index: 9999; }
+    #header .header {
+      margin-top: 7px; }
+      #header .header #logo img {
+        width: 20vw !important; }
+
+  .detail-product {
+    width: 100% !important; }
+    .detail-product .main-image img {
+      height: 200px !important; }
+    .detail-product .buy-share .button-buy {
+      display: none; }
+
+  .relate-product {
+    width: 100% !important; }
+    .relate-product ul {
+      margin: 0px !important; } }
+
+/*# sourceMappingURL=detail.css.map */

@@ -1,0 +1,56 @@
+/*horizontal device*/
+@media only screen and (max-width: 640px) and (min-width: 482px) {
+    #contents .content-left .child-item a.tip_trigger {
+        width: 48%;
+        float: left;
+    }
+    .mobile-title-product {
+        width: 60%;
+    }
+    #contents .sbHolder {
+        width: 230px !important;
+    }
+    .mobile-search {
+        float: right;
+        margin-right: 10px;
+    }
+    ul.dropdown li {
+        display: block;
+        overflow: hidden;
+    }
+    ul.dropdown li ul li {
+        width: 25% !important;
+    }
+
+    /*style for detail*/
+
+    .da-thumbs li {
+        height: auto !important;
+        width: 48% !important;
+        float: left !important;
+        margin-right: 10px !important;
+    }
+    .da-thumbs li:nth-child( 2n + 1 ) {
+        float: right !important;
+        margin-right: 0px !important;
+    }
+    #back-top {
+        display: none !important;
+    }
+
+    /*STYLE for detail product*/
+    .detail-product .main-image img {
+        height: 340px !important;
+    }
+}
+/*Iphone 6*/
+@media only screen and (max-width: 627px) and (min-width: 370px) {
+    .mobile-title-product {
+        width: 70%;
+    }
+}
+@media only screen and (device-width: 600px) {
+    .mobile-title-product {
+        width: 60%;
+    }
+}

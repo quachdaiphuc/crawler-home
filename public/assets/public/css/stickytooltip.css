@@ -1,0 +1,60 @@
+
+a {color: #d60000; text-decoration: none;}
+
+/*--Tooltip Styles--*/
+.child-item a.tip_trigger {
+    float: left;
+    margin: 5px 9px 20px 0;
+    padding: 10px;
+    border: 1px dashed #ddd;
+    overflow: hidden;
+}
+.child-item a.tip_trigger + img {
+    display: block;
+    width: 80px;
+    height: 80px;
+}
+
+.tip {
+    width: 450px;
+    background-color: #ffffff 0.5;
+    border: 1px solid #d4d4d4;
+    display:none; /*--Hides by default--*/
+    padding:10px;
+    position:absolute;	z-index:1000;
+    /*-webkit-border-radius: 3px;*/
+    /*-moz-border-radius: 3px;*/
+    /*border-radius: 3px;*/
+}
+
+.tip img {
+    display: block;
+    width: 100%;
+    height: 200px;
+}
+
+.tip div.item-description {
+    background: #333;
+    width: 100%;
+    height: 80px;
+    position: relative;
+}
+
+.tip div.item-description p {
+    padding: 10px 5px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+}
+.tip div.item-description span {
+    font-size: 30px;
+    color: #ffffff;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.tip div.item-description span b{
+    font-size: 18px;
+    padding: 2px 5px;
+}
