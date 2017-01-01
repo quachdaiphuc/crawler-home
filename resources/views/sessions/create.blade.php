@@ -48,6 +48,9 @@
                 <section class="login_content">
                     {!! Form::open(['route' => 'sessions.store']) !!}
                         <h1>Login Form</h1>
+                        <h3>Email: admin@admin.com</h3>
+                        <h3>PassWord: admin</h3>
+                    
                         @if (session()->has('flash_message'))
                             <div class="alert alert-success">
                                 {{ session()->get('flash_message') }}
@@ -75,14 +78,13 @@
                         <div class="separator">
                         {!! Form::close() !!}
                             <p class="change_link">New to site?
-                                <a href="{{url('register')}}" class="to_register"> Create Account </a>
+                                <a href="#" class="to_register"> Create Account </a>
                             </p>
                             <div class="clearfix"></div>
                             <br />
                             <div>
-                                <h1><i class="fa fa-paw" style="font-size: 26px;"></i> Gentelella Alela!</h1>
+                                <h1><i class="fa fa-paw" style="font-size: 26px;"></i> Nicetut.com</h1>
 
-                                <p>©2015 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
                             </div>
                         </div>
                     </form>
