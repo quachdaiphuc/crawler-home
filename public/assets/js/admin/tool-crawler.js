@@ -1,3 +1,21 @@
+var oTable;
+
+$(document).ready(function () {
+    oTable = $('#result').dataTable({
+        "oLanguage": {
+            "sSearch": "Search all columns:"
+        },
+        "aoColumnDefs": [
+            {
+                'bSortable': false,
+                aTargets: ["_all"]
+            } //disables sorting for column one
+        ],
+        'iDisplayLength': 10,
+        "sPaginationType": "full_numbers"
+    });
+});
+
 $.fn.serializeObject = function () {
     var o = {};
     var a = this.serializeArray();
@@ -132,7 +150,13 @@ function save_setting() {
         },
         url : SITE_ROOT + 'save-setting',
         success : function(data) {
-            alert(data);
+            if(data) {
+                $('#mes-alert-success').css('display', 'block');
+                $('#mes-success').html('Setting is saved !');
+            } else {
+                $('#mes-alert-error').css('display', 'block');
+                $('#mes-error').html('There are some errors, please check your setting !');
+            }
         }
     });
 }
@@ -193,11 +217,11 @@ $('#select-setting').on('change', function() {
                         if(parent != '') {
                             setTimeout(function() {
                                 $('#' + parent).append(data);
-                            }, 2000);
+                            }, 10);
                         } else {
                             setTimeout(function() {
                                 $('#setting-html-row').html(data);
-                            }, 2000);
+                            }, 10);
                         }
                     },
                 });
@@ -218,4 +242,19 @@ function findParent(id) {
     }
 
     return parent;
+}
+
+/*
+* function save data into DB
+* */
+function saveData() {
+    $.ajax({
+        type : 'POST',
+        url : SITE_ROOT + 'save-data',
+        success : function(data) {
+            $('#mes-alert-success').css('display', 'block');
+            $('#mes-success').html(data + (data > 1 ? ' records' : ' record') + ' crawl success !');
+            $('#modalPreview').modal('toggle');
+        }
+    });
 }

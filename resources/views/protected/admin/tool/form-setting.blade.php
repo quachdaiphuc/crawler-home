@@ -3,7 +3,7 @@
         <div class="col-md-4" style="margin-left: {{ 20 * $margin }}px">
             <div class="form-inline">
                 {!! Form::select("tags[{$id}]", $tags, null,['class' => 'form-control'] ) !!}
-                <input required = 'required' name="htmls[{{$id}}]" type="text" class="form-control" placeholder='Ex: class="news-list"'>
+                <input name="htmls[{{$id}}]" type="text" class="form-control" placeholder='Ex: class="news-list"'>
                 <input type="hidden" name="depths[]" value="{{$id}}">
             </div>
         </div>

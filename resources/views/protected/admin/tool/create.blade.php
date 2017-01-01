@@ -10,13 +10,16 @@
 
                         <div class="clearfix"></div>
                     </div>
-                    @if(Session::has('success'))
-                        <div class="alert alert-info alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            {{Session::get('count')}} records crawl
-                            {{Session::get('success')}}
-                        </div>
-                    @endif
+
+                    <div id="mes-alert-success" style="display: none;" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p id="mes-success"></p>
+                    </div>
+                    <div id="mes-alert-error" style="display: none;" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p id="mes-error"></p>
+                    </div>
+
                     <div class="x_content">
                         {!! Form::open(['route' => 'admin.tool.store', 'method' => 'POST', 'class' => 'form-horizontal form-label-left','id' => 'form-setting', 'files' => 'true']) !!}
                             <p>All field has <code>*</code> is require
@@ -71,7 +74,7 @@
                                         <div class="col-md-4">
                                             <div class="form-inline">
                                                 {!! Form::select('tags[0]', $tags, null,['class' => 'form-control'] ) !!}
-                                                <input required = 'required' name="htmls[0]" type="text" class="form-control" placeholder='Ex: class="news-list"'>
+                                                <input name="htmls[0]" type="text" class="form-control" placeholder='Ex: class="news-list"'>
                                                 <input type="hidden" name="depths[]" value="0">
                                             </div>
                                         </div>
@@ -122,10 +125,74 @@
             </div>
         </div>
     </div>
+
+    <!-- Large modal -->
+
+    @if(Session::has('viewData'))
+    <div class="modal fade bs-example-modal-lg" id="modalPreview" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Preview</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            @if(Session::get('viewData') != 0)
+                                <table id="result" class="table table-striped responsive-utilities jambo_table">
+                                    <thead>
+                                    <tr class="headings">
+                                        @foreach (Session::get('keys') as $key)
+                                            <th>{{ $key }}</th>
+                                        @endforeach
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    @foreach (Session::get('viewData') as $item)
+                                        <tr class="even pointer">
+                                            @foreach (Session::get('keys') as $key)
+                                                <th>{{ $item[$key][0] }}</th>
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            @else
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <p>No result crawled, please check your setting !</p>
+                                </div>
+                            @endif
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    @if(Session::get('viewData') != 0)
+                        <button onclick="saveData()" type="button" class="btn btn-primary">Save Data</button>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 @stop
 
 @section('outJS')
-    <!-- form validation -->
-    <script src="{{asset('assets/js/validator/validator.js')}}"></script>
+    <script src="{{ asset('assets/js/datatables/js/jquery.dataTables.js') }}"></script>
+    <script src="{{asset('assets/js/datatables/tools/js/dataTables.tableTools.js')}}"></script>
+    {{--<script src="{{asset('assets/js/validator/validator.js')}}"></script>--}}
+    <script>
+        var datas = '{{ Session::has('viewData')}}';
+        console.log(datas);
+        if(datas) {
+            $('#modalPreview').modal('show');
+        }
+    </script>
     <script src="{{asset('assets/js/admin/tool-crawler.js')}}"></script>
+
 @stop

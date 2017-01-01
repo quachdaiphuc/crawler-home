@@ -61,9 +61,14 @@
             Route::post('/add-form-setting', ['as' => 'add-form-setting', 'uses' => 'Admin\CrawlToolController@addFormSetting']);
             Route::post('/get-table-field', ['as' => 'get-table-field', 'uses' => 'Admin\CrawlToolController@getTableField']);
             Route::post('/tool', ['as' => 'admin.tool.store', 'uses' => 'Admin\CrawlToolController@store']);
+            Route::post('/save-data', ['as' => 'admin.tool.save', 'uses' => 'Admin\CrawlToolController@saveData']);
+
             Route::post('/save-setting', ['as' => 'save-setting', 'uses' => 'Admin\CrawlToolController@saveSetting']);
             Route::post('/load-setting', ['as' => 'load-setting', 'uses' => 'Admin\CrawlToolController@loadSetting']);
             Route::post('/load-setting-item', ['as' => 'load-setting-item', 'uses' => 'Admin\CrawlToolController@loadSettingItem']);
             Route::post('/check-name', ['as' => 'check-name', 'uses' => 'Admin\CrawlToolController@checkName']);
+
+            //delete data
+            Route::get('/delete-data', ['as' => 'admin.tool.delete', 'uses' => 'Admin\CrawlToolController@deleteAll']);
         });
     });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Commons\Common;
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Session;
 use Yangqi\Htmldom\Htmldom;
 
 /**
@@ -82,8 +84,13 @@ class CrawlToolController extends Controller
     public function getTableField(Request $request) {
         $tableName = $request->tableName;
         $columns = Schema::getColumnListing($tableName);
+        $ignoreField = array('id', 'created_at', 'updated_at');
         $fields = array("" => "select one");
         foreach($columns as $col) {
+            if(in_array($col, $ignoreField)) {
+                continue;
+            }
+
             $fields[$col] = $col;
         }
 
@@ -111,17 +118,43 @@ class CrawlToolController extends Controller
             $data = $this->lastValue($data, $page, $depth, $tags, $htmls, $types, $hid_fields, 0);
         }
 
-        // save data into table after crawler
-        $count = $this->saveData($table, $data);
-        return Redirect::to('admin/tool')->with(['success' => trans('message.SUCCESS'), 'count' => $count]);
+        Session::put('dataSave', $data);
+        Session::put('table', $table);
+        $keys = array_keys($data);
+        $viewData = $this->convertData($data);
+
+        return Redirect::to('admin/tool')->with(['success' => trans('message.SUCCESS'), 'viewData' => $viewData, 'keys' => $keys]);
     }
 
+    /**
+     * @param $datas
+     * @return array|int
+     */
+    public function convertData($datas) {
+        $keys = array_keys($datas);
+        if(count($keys) < 1) {
+            return 0;
+        }
+
+        $results = array();
+        for($i = 0; $i < count($datas[$keys[0]]); $i ++) {
+            $arrTmp = array();
+            foreach($keys as $key) {
+                $arrTmp[$key][] = $datas[$key][$i];
+            }
+
+            $results[] = $arrTmp;
+        }
+        return $results;
+    }
 
     /**
      * save data into table
      * @param $data
      */
-    public function saveData($table, $data) {
+    public function saveData() {
+        $table = Session::get('table');
+        $data  = Session::get('dataSave');
         $count = 0;
         $modelName = ucfirst(str_singular($table));
         $modelClass = "App\Models\\" . $modelName;
@@ -138,6 +171,11 @@ class CrawlToolController extends Controller
                 $count++;
             }
         }
+
+        // unset session after save
+        Session::forget('table');
+        Session::forget('dataSave');
+
         return $count;
     }
 
@@ -154,7 +192,8 @@ class CrawlToolController extends Controller
      */
     public function lastValue($data, $page, $depths, $tags, $htmls, $types, $hid_fields, $count) {
         $length = count($depths);
-        $tag = $htmls[$depths[$count]] != "" ? $tags[$depths[$count]] . '[' . $htmls[$depths[$count]] . ']' : $tags[$depths[$count]];
+        $attr = $this->axtractOneAttribute($htmls[$depths[$count]]);
+        $tag = $attr != "" ? $tags[$depths[$count]] . '[' . $attr . ']' : $tags[$depths[$count]];
         $type = $count > 0 ? $types[$depths[$count]] : '';
         $hid_field = $count > 0 ? $hid_fields[$depths[$count]] : '';
 
@@ -183,6 +222,19 @@ class CrawlToolController extends Controller
 
         return $data;
 
+    }
+
+    /**
+     * @param $attr
+     * @return string
+     */
+    public function axtractOneAttribute($attr) {
+        $explodeAttr = explode('=', $attr);
+        if(!isset($explodeAttr[1])) {
+            return '';
+        }
+        $explodeValue = explode(' ', trim($explodeAttr[1], '"'));
+        return $explodeAttr[0] . '="' . $explodeValue[0] . '"';
     }
 
     /**
@@ -344,5 +396,24 @@ class CrawlToolController extends Controller
         }
 
         return Response::json($isDuplicate);
+    }
+
+    public function deleteAll() {
+        $settings = Setting::all();
+        foreach($settings as $setting) {
+            Setting::find($setting->id)->delete();
+        }
+
+        $orders = Order::all();
+        foreach($orders as $order) {
+            Order::find($order->id)->delete();
+        }
+
+        $news = News::all();
+        foreach($news as $new) {
+            News::find($new->id)->delete();
+        }
+
+        return 'done';
     }
 } //class
