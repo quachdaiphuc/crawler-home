@@ -191,42 +191,43 @@ function checkDuplicate(val) {
 * load setting
 * */
 $('#select-setting').on('change', function() {
+    $('#setting-html-row').html('');
     var value = $(this).val();
-    $.ajax({
+    var setting = $.ajax({
         type : 'POST',
         data: {
             'order' : value
         },
         url : SITE_ROOT + 'load-setting',
-        success : function(data) {
-            $('#selectTable').val(data.order.table);
-            $('#url').val(data.order.url);
-            $('#setting-name').val(data.order.name);
-            tableChange();
+        async: false,
+    });
 
-            $.each(data.setting, function() {
-                //load item
-                var parent = findParent(this.name);
-                $.ajax({
-                    type : 'POST',
-                    data: {
-                        'id' : this.id
-                    },
-                    url : SITE_ROOT + 'load-setting-item',
-                    success : function(data) {
-                        if(parent != '') {
-                            setTimeout(function() {
-                                $('#' + parent).append(data);
-                            }, 10);
-                        } else {
-                            setTimeout(function() {
-                                $('#setting-html-row').html(data);
-                            }, 10);
-                        }
-                    },
-                });
+    setting.done(function(data) {
+        $('#selectTable').val(data.order.table);
+        $('#url').val(data.order.url);
+        $('#setting-name').val(data.order.name);
+        tableChange();
+
+        $.each(data.setting, function() {
+            //load item
+            var parent = findParent(this.name);
+            var item = $.ajax({
+                type : 'POST',
+                data: {
+                    'id' : this.id
+                },
+                url : SITE_ROOT + 'load-setting-item',
+                async: false,
             });
-        }
+
+            item.done(function(value){
+                if(parent != '') {
+                    $('#' + parent).append(value);
+                } else {
+                    $('#setting-html-row').html(value);
+                }
+            });
+        });
     });
 });
 
